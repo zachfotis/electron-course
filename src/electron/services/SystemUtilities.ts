@@ -24,6 +24,10 @@ export class SystemUtilities {
     return new URL('http://localhost:5123');
   }
 
+  public static getAssetPath() {
+    return path.join(app.getAppPath(), SystemUtilities.isDevelopmentEnv() ? '.' : '..', 'src/assets');
+  }
+
   public static ipcMainHandle<Key extends keyof EventPayloadMapping>(
     key: Key,
     handler: () => EventPayloadMapping[Key],

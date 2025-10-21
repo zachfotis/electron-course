@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import './App.css';
 import { Chart } from './Chart';
+import { useStaticData } from './hooks/useStaticData';
 import { useStatistics } from './hooks/useStatistics';
 
 function App() {
@@ -112,18 +113,6 @@ function Header() {
       />
     </header>
   );
-}
-
-function useStaticData() {
-  const [staticData, setStaticData] = useState<StaticData | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      setStaticData(await window.electron.getStaticData());
-    })();
-  }, []);
-
-  return staticData;
 }
 
 export default App;

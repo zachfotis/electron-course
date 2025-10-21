@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import { createTray } from '../tray.js';
 import { ResourceManager } from './ResourceManager.js';
 import { SystemUtilities } from './SystemUtilities.js';
 
@@ -7,7 +8,6 @@ enum MAIN_APP_EVENTS {
 }
 
 export class MainAppService {
-
   public static initialize(): void {
     app.on(MAIN_APP_EVENTS.READY, MainAppService.onAppReady);
   }
@@ -31,5 +31,7 @@ export class MainAppService {
     SystemUtilities.ipcMainHandle('staticData', () => {
       return ResourceManager.getStaticData();
     });
+
+    createTray(mainWindow);
   }
 }

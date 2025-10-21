@@ -1,8 +1,8 @@
 {
   "appId": "com.fzachopoulos.electron-course",
   "files": ["dist-electron", "dist-react"],
-  "extraResources": ["dist-electron/preload.cjs"],
-  "icon": "./public/tools.png",
+  "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
+  "icon": "./src/assets/tools.png",
   "mac": {
     "target": ["dmg"],
     "identity": null
