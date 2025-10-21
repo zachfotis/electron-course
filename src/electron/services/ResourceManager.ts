@@ -12,7 +12,7 @@ export class ResourceManager {
       const cpuUsage = await ResourceManager.getCPUUsage();
       const ramUsage = ResourceManager.getRAMUsage();
       const storageData = ResourceManager.getStorageData();
-      SystemUtilities.ipcWebContentsSend(IPC_EVENTS.STATISTICS, mainWindow.webContents, {
+      SystemUtilities.ipcWebContentsSend('statistics', mainWindow.webContents, {
         cpuUsage,
         ramUsage,
         storageUsage: storageData.usage,

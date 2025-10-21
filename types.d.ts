@@ -1,3 +1,4 @@
+
 type Statistics = {
   cpuUsage: number;
   ramUsage: number;
@@ -10,14 +11,9 @@ type StaticData = {
   totalMemoryGB: number;
 };
 
-enum IPC_EVENTS {
-  STATISTICS = 'statistics',
-  GET_STATIC_DATA = 'getStaticData',
-}
-
 type EventPayloadMapping = {
-  [IPC_EVENTS.STATISTICS]: Statistics;
-  [IPC_EVENTS.GET_STATIC_DATA]: StaticData;
+  statistics: Statistics;
+  staticData: StaticData;
 };
 
 type UnsubscribeFunction = () => void;

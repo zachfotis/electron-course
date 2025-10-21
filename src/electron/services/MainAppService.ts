@@ -27,7 +27,7 @@ export class MainAppService {
 
     ResourceManager.pollResources(mainWindow);
 
-    SystemUtilities.ipcMainHandle(IPC_EVENTS.GET_STATIC_DATA, () => {
+    SystemUtilities.ipcMainHandle('staticData', () => {
       return ResourceManager.getStaticData();
     });
   }

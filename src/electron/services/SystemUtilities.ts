@@ -30,7 +30,7 @@ export class SystemUtilities {
   ) {
     ipcMain.handle(key, event => {
       SystemUtilities.validateEventFrame(event.senderFrame);
-      handler();
+      return handler();
     });
   }
 
