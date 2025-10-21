@@ -16,11 +16,15 @@ type EventPayloadMapping = {
   staticData: StaticData;
 };
 
+type View = 'CPU' | 'RAM' | 'STORAGE';
+
+type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
+
 type UnsubscribeFunction = () => void;
 
 interface Window {
   electron: {
-    subscribeStatistics: (callback: (statistics: Statistics) => void) => void;
+    subscribeStatistics: (callback: (statistics: Statistics) => void) => UnsubscribeFunction;
     getStaticData: () => Promise<StaticData>;
   };
 }

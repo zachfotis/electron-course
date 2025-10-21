@@ -17,6 +17,7 @@ export class MainAppService {
       webPreferences: {
         preload: SystemUtilities.getPreloadPath(),
       },
+      frame: false,
     });
 
     if (SystemUtilities.isDevelopmentEnv()) {
