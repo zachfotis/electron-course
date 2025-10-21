@@ -2,6 +2,7 @@ import type { BrowserWindow } from 'electron';
 import fs from 'fs';
 import os from 'os';
 import osUtils from 'os-utils';
+import { SystemUtilities } from './SystemUtilities.js';
 
 export class ResourceManager {
   private static readonly POLLING_INTERVAL = 500;
@@ -11,18 +12,15 @@ export class ResourceManager {
       const cpuUsage = await ResourceManager.getCPUUsage();
       const ramUsage = ResourceManager.getRAMUsage();
       const storageData = ResourceManager.getStorageData();
-      const staticData = ResourceManager.getStaticData();
-
-      mainWindow.webContents.send('statistics', {
+      SystemUtilities.ipcWebContentsSend(IPC_EVENTS.STATISTICS, mainWindow.webContents, {
         cpuUsage,
         ramUsage,
         storageUsage: storageData.usage,
-        ...staticData,
       });
     }, ResourceManager.POLLING_INTERVAL);
   }
 
-  private static getStaticData() {
+  public static getStaticData() {
     return {
       cpuModel: os.cpus()[0].model,
       totalStorage: ResourceManager.getStorageData().total,

@@ -1,8 +1,30 @@
 const electron = require('electron');
 
 electron.contextBridge.exposeInMainWorld('electron', {
-  subscribeStatistics: (callback: (statistics: any) => void) => {
-    callback('Subscribed to statistics');
+  subscribeStatistics: callback => {
+    ipcOn(IPC_EVENTS.STATISTICS, callback);
   },
-  getStaticData: () => console.log('Getting static data'),
-});
+  getStaticData: () => ipcInvoke(IPC_EVENTS.GET_STATIC_DATA),
+} satisfies Window['electron']);
+
+function ipcInvoke<Key extends keyof EventPayloadMapping>(
+  key: Key
+): Promise<EventPayloadMapping[Key]> {
+  return electron.ipcRenderer.invoke(key);
+}
+
+function ipcOn<Key extends keyof EventPayloadMapping>(
+  key: Key,
+  callback: (payload: EventPayloadMapping[Key]) => void
+) {
+  const cb = (_: Electron.IpcRendererEvent, payload: any) => callback(payload);
+  electron.ipcRenderer.on(key, cb);
+  return () => electron.ipcRenderer.off(key, cb);
+}
+
+function ipcSend<Key extends keyof EventPayloadMapping>(
+  key: Key,
+  payload: EventPayloadMapping[Key]
+) {
+  electron.ipcRenderer.send(key, payload);
+}
